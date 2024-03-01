@@ -5,3 +5,4 @@ jax
 tqdm
 typing-extensions
 streamlit-ace
+gdown
