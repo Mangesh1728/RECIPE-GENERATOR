@@ -5,7 +5,7 @@ from transformers import FlaxAutoModelForSeq2SeqLM, AutoTokenizer
 
 # Define constants
 MODEL_FOLDER_URL = "https://drive.google.com/drive/folders/1liKMUcWxb05lAVgKDBOtYHEfIZZgUi1D?usp=drive_link"
-MODEL_NAME_OR_PATH = "flax_model"
+MODEL_NAME_OR_PATH = "flax-community/t5-recipe-generation"
 prefix = "items: "
 
 # Additional constants
