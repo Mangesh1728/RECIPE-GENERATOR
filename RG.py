@@ -1,11 +1,11 @@
 # Import necessary libraries
 import streamlit as st
+import gdown
 from transformers import FlaxAutoModelForSeq2SeqLM, AutoTokenizer
 
 # Define constants
-MODEL_NAME_OR_PATH = "/content/path/to/save/model"
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_OR_PATH, use_fast=True)
-model = FlaxAutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME_OR_PATH)
+MODEL_FOLDER_URL = "https://drive.google.com/drive/folders/1liKMUcWxb05lAVgKDBOtYHEfIZZgUi1D?usp=drive_link"
+MODEL_NAME_OR_PATH = "flax_model"
 prefix = "items: "
 
 # Additional constants
@@ -18,7 +18,7 @@ generation_kwargs = {
     "top_p": 0.95
 }
 
-special_tokens = tokenizer.all_special_tokens
+special_tokens = ["<sep>", "<section>"]
 tokens_map = {
     "<sep>": "--",
     "<section>": "\n"
@@ -73,9 +73,29 @@ def generation_function(texts):
     )
     return generated_recipe
 
+# Download model files from the Google Drive folder
+def download_model_files(folder_url):
+    # Define file URLs
+    file_urls = [
+        f"{folder_url}/tokenizer_config.json",
+        f"{folder_url}/flax_model.msgpack",
+        # Add more file URLs as needed
+    ]
+
+    # Download each file
+    for file_url in file_urls:
+        gdown.download(file_url, output=MODEL_NAME_OR_PATH)
+
 # Streamlit app
 def main():
-# Set background color and frame color
+    # Download model files from the Google Drive folder
+    download_model_files(MODEL_FOLDER_URL)
+
+    # Load tokenizer and model
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_OR_PATH, use_fast=True)
+    model = FlaxAutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME_OR_PATH)
+
+    # Set background color and frame color
     st.markdown(
         """
         <style>
