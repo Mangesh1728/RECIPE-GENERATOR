@@ -1,4 +1,7 @@
 streamlit
 transformers
-torch
 flax
+jax
+tqdm
+typing-extensions
+streamlit-ace
